@@ -22,10 +22,15 @@ namespace ThoNohT.NohBoard.Keyboard.Styles
     /// <summary>
     /// Represents the style of any element that can be placed on a keyboard.
     /// </summary>
-    [KnownType(typeof(bool))]
+    [KnownType(typeof(KeyStyle))]
+    [KnownType(typeof(MouseSpeedIndicatorStyle))]
     [DataContract(Name = "ElementStyle", Namespace = "")]
     public abstract class ElementStyle
     {
+        /// <summary>
+        /// Returns a clone of this element style.
+        /// </summary>
+        /// <returns>The cloned element style.</returns>
         public abstract ElementStyle Clone();
     }
 }
