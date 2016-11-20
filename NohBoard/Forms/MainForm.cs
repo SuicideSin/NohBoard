@@ -341,6 +341,8 @@ namespace ThoNohT.NohBoard.Forms
             this.mnuSaveToGlobalStyleName.Visible = GlobalSettings.Settings.LoadedGlobalStyle;
 
             this.mnuToggleEditMode.Enabled = GlobalSettings.CurrentDefinition != null;
+
+            this.mnuMoveElement.Visible = this.HighlightedDefinition != null;
         }
 
         /// <summary>
@@ -410,7 +412,7 @@ namespace ThoNohT.NohBoard.Forms
             }
 
             // Draw the element being manipulated
-            this.currentlyManipulating?.RenderEditing(e.Graphics);
+            this.currentlyManipulating?.Item2.RenderEditing(e.Graphics);
             this.HighlightedDefinition?.RenderHighlight(e.Graphics, this.currentManipulationPoint);
 
             base.OnPaint(e);
