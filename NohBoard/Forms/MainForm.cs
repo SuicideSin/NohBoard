@@ -411,6 +411,7 @@ namespace ThoNohT.NohBoard.Forms
 
             // Draw the element being manipulated
             this.currentlyManipulating?.RenderEditing(e.Graphics);
+            this.HighlightedDefinition?.RenderHighlight(e.Graphics, this.currentManipulationPoint);
 
             base.OnPaint(e);
         }
