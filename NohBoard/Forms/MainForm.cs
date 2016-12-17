@@ -346,6 +346,15 @@ namespace ThoNohT.NohBoard.Forms
             this.mnuToggleEditMode.Enabled = GlobalSettings.CurrentDefinition != null;
 
             this.mnuMoveElement.Visible = this.HighlightedDefinition != null;
+
+            var highlightedSomething = this.mnuToggleEditMode.Checked && this.HighlightedDefinition != null;
+
+            // Edit mode related menu items.
+            this.mnuAddBoundaryPoint.Visible = highlightedSomething &&
+                this.HighlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveEdge;
+
+            this.mnuRemoveBoundaryPoint.Visible = highlightedSomething &&
+                this.HighlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveBoundary;
         }
 
         /// <summary>
@@ -355,11 +364,9 @@ namespace ThoNohT.NohBoard.Forms
         {
             Application.Exit();
         }
-
         #endregion Settings
 
         #region Rendering
-
         /// <summary>
         /// Paints the keyboard on the screen.
         /// </summary>
@@ -389,10 +396,10 @@ namespace ThoNohT.NohBoard.Forms
                     if (!kkDef.KeyCodes.All(kbKeys.Contains)) continue;
 
                     if (kkDef.KeyCodes.Count == 1
-                        && allDefs.OfType<KeyboardKeyDefinition>().Any(
-                            d => d.KeyCodes.Count > 1
-                                 && d.KeyCodes.All(kbKeys.Contains)
-                                 && d.KeyCodes.ContainsAll(kkDef.KeyCodes))) continue;
+                        && allDefs.OfType<KeyboardKeyDefinition>()
+                            .Any(d => d.KeyCodes.Count > 1
+                            && d.KeyCodes.All(kbKeys.Contains)
+                            && d.KeyCodes.ContainsAll(kkDef.KeyCodes))) continue;
 
                     kkDef.Render(e.Graphics, true, KeyboardState.ShiftDown, KeyboardState.CapsActive);
                 }
@@ -453,7 +460,7 @@ namespace ThoNohT.NohBoard.Forms
                 MessageBox.Show("Please load or save a style before editing element styles.");
                 return;
             }
-            
+
             // Sanity check, don't try anything if there's no selected element.
             if (this.elementUnderCursor == null) return;
             var id = this.elementUnderCursor.Id;
@@ -485,7 +492,7 @@ namespace ThoNohT.NohBoard.Forms
             if (this.elementUnderCursor is MouseSpeedIndicatorDefinition)
             {
                 using (var styleForm = new MouseSpeedStyleForm(
-                        GlobalSettings.CurrentStyle.TryGetElementStyle<MouseSpeedIndicatorStyle>(id),
+                    GlobalSettings.CurrentStyle.TryGetElementStyle<MouseSpeedIndicatorStyle>(id),
                     GlobalSettings.CurrentStyle.DefaultMouseSpeedIndicatorStyle))
                 {
                     styleForm.StyleChanged += style =>
@@ -559,9 +566,6 @@ namespace ThoNohT.NohBoard.Forms
                 saveForm.Dispose();
             }
         }
-
         #endregion Styles
-
-  
     }
 }
