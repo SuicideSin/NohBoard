@@ -366,6 +366,7 @@ namespace ThoNohT.NohBoard.Forms
         {
             Application.Exit();
         }
+
         #endregion Settings
 
         #region Rendering
