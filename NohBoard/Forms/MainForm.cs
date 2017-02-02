@@ -72,8 +72,8 @@ namespace ThoNohT.NohBoard.Forms
         {
             if (GlobalSettings.CurrentDefinition == null) return;
 
-            this.UndoHistory.Clear();
-            this.RedoHistory.Clear();
+            this.undoHistory.Clear();
+            this.redoHistory.Clear();
 
             this.ClientSize = new Size(GlobalSettings.CurrentDefinition.Width, GlobalSettings.CurrentDefinition.Height);
 
@@ -345,19 +345,19 @@ namespace ThoNohT.NohBoard.Forms
 
             this.mnuToggleEditMode.Enabled = GlobalSettings.CurrentDefinition != null;
 
-            this.mnuMoveElement.Visible = this.HighlightedDefinition != null;
+            this.mnuMoveElement.Visible = this.highlightedDefinition != null;
 
-            var highlightedSomething = this.mnuToggleEditMode.Checked && this.HighlightedDefinition != null;
+            var highlightedSomething = this.mnuToggleEditMode.Checked && this.highlightedDefinition != null;
 
             // Edit mode related menu items.
             this.mnuAddBoundaryPoint.Visible = highlightedSomething &&
-                this.HighlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveEdge;
+                this.highlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveEdge;
 
             this.mnuRemoveBoundaryPoint.Visible = highlightedSomething &&
-                this.HighlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveBoundary;
+                this.highlightedDefinition.CurrentManipulation.Type == ElementManipulationType.MoveBoundary;
 
             this.mnuRemoveElement.Visible = highlightedSomething;
-            this.mnuAddElement.Visible = this.mnuToggleEditMode.Checked && this.HighlightedDefinition == null;
+            this.mnuAddElement.Visible = this.mnuToggleEditMode.Checked && this.highlightedDefinition == null;
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace ThoNohT.NohBoard.Forms
 
             // Draw the element being manipulated
             this.currentlyManipulating?.Item2.RenderEditing(e.Graphics);
-            this.HighlightedDefinition?.RenderHighlight(e.Graphics, this.currentManipulationPoint);
+            this.highlightedDefinition?.RenderHighlight(e.Graphics, this.currentManipulationPoint);
 
             base.OnPaint(e);
         }
