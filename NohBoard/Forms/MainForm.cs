@@ -29,6 +29,7 @@ namespace ThoNohT.NohBoard.Forms
     using Keyboard;
     using Keyboard.ElementDefinitions;
     using Keyboard.Styles;
+    using Style;
 
     /// <summary>
     /// The main form.
@@ -333,6 +334,7 @@ namespace ThoNohT.NohBoard.Forms
                 this.elementUnderCursor =
                     GlobalSettings.CurrentDefinition.Elements.FirstOrDefault(x => x.Inside(mousePos));
                 this.mnuEditElementStyle.Enabled = this.elementUnderCursor != null;
+                this.mnuElementProperties.Enabled = this.elementUnderCursor != null;
             }
 
             this.mnuEditKeyboardStyle.Enabled = GlobalSettings.CurrentDefinition != null;
@@ -345,21 +347,19 @@ namespace ThoNohT.NohBoard.Forms
 
             this.mnuToggleEditMode.Enabled = GlobalSettings.CurrentDefinition != null;
 
-            var useDefinition = this.selectedDefinition ?? this.highlightedDefinition;
+            this.mnuMoveElement.Visible = this.relevantDefinition != null;
 
-            this.mnuMoveElement.Visible = useDefinition != null;
-
-            var highlightedSomething = this.mnuToggleEditMode.Checked && useDefinition != null;
+            var highlightedSomething = this.mnuToggleEditMode.Checked && this.relevantDefinition != null;
 
             // Edit mode related menu items.
             this.mnuAddBoundaryPoint.Visible = highlightedSomething &&
-                useDefinition.RelevantManipulation.Type == ElementManipulationType.MoveEdge;
+                this.relevantDefinition.RelevantManipulation.Type == ElementManipulationType.MoveEdge;
 
             this.mnuRemoveBoundaryPoint.Visible = highlightedSomething &&
-                useDefinition.RelevantManipulation.Type == ElementManipulationType.MoveBoundary;
+                this.relevantDefinition.RelevantManipulation.Type == ElementManipulationType.MoveBoundary;
 
             this.mnuRemoveElement.Visible = highlightedSomething;
-            this.mnuAddElement.Visible = this.mnuToggleEditMode.Checked && useDefinition == null;
+            this.mnuAddElement.Visible = this.mnuToggleEditMode.Checked && this.relevantDefinition == null;
         }
 
         /// <summary>
@@ -581,6 +581,7 @@ namespace ThoNohT.NohBoard.Forms
                 saveForm.Dispose();
             }
         }
+
         #endregion Styles
     }
 }
