@@ -140,6 +140,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuLoadKeyboard_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             using (var manageForm = new LoadKeyboardForm())
             {
                 manageForm.DefinitionChanged += (kbDef, kbStyle, globalStyle) =>
@@ -191,6 +193,8 @@ namespace ThoNohT.NohBoard.Forms
         /// <param name="e"></param>
         private void mnuSaveDefinitionAsName_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             GlobalSettings.CurrentDefinition.Save();
             GlobalSettings.Settings.LoadedCategory = GlobalSettings.CurrentDefinition.Category;
             GlobalSettings.Settings.LoadedKeyboard = GlobalSettings.CurrentDefinition.Name;
@@ -201,6 +205,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuSaveDefinitionAs_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             using (var saveForm = new SaveKeyboardAsForm())
             {
                 saveForm.ShowDialog(this);
@@ -306,6 +312,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuSettings_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             using (var settingsForm = new SettingsForm())
             {
                 var result = settingsForm.ShowDialog(this);
@@ -324,6 +332,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void MainMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            this.menuOpen = true;
+
             this.mnuSaveDefinition.Enabled = GlobalSettings.CurrentDefinition != null;
             if (GlobalSettings.CurrentDefinition != null)
             {
@@ -361,6 +371,25 @@ namespace ThoNohT.NohBoard.Forms
 
             this.mnuRemoveElement.Visible = highlightedSomething;
             this.mnuAddElement.Visible = this.mnuToggleEditMode.Checked && this.relevantDefinition == null;
+        }
+
+        /// <summary>
+        /// Handles setting the menu open variable to false when esc is pressed.
+        /// </summary>
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            // Esc closes the menu too.
+            if (e.KeyCode == Keys.Escape)
+                this.menuOpen = false;
+        }
+
+        /// <summary>
+        /// Handles setting the menu open variable to false when the form loses focus.
+        /// </summary>
+        private void MainForm_Deactivate(object sender, EventArgs e)
+        {
+            // Deactivating the form also closes the menu.
+            this.menuOpen = false;
         }
 
         /// <summary>
@@ -471,6 +500,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuEditElementStyle_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             if (GlobalSettings.Settings.LoadedStyle == null)
             {
                 MessageBox.Show("Please load or save a style before editing element styles.");
@@ -534,6 +565,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuEditKeyboardStyle_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             if (GlobalSettings.Settings.LoadedStyle == null)
             {
                 MessageBox.Show("Please load or save a style before editing the keyboard style.");
@@ -556,6 +589,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuSaveStyleToName_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             GlobalSettings.CurrentStyle.Save(false);
             GlobalSettings.Settings.LoadedStyle = GlobalSettings.CurrentStyle.Name;
             GlobalSettings.Settings.LoadedGlobalStyle = false;
@@ -566,6 +601,8 @@ namespace ThoNohT.NohBoard.Forms
         /// </summary>
         private void mnuSaveToGlobalStyleName_Click(object sender, EventArgs e)
         {
+            this.menuOpen = false;
+
             GlobalSettings.CurrentStyle.Save(true);
             GlobalSettings.Settings.LoadedStyle = GlobalSettings.CurrentStyle.Name;
             GlobalSettings.Settings.LoadedGlobalStyle = true;
