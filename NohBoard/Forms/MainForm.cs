@@ -385,16 +385,6 @@ namespace ThoNohT.NohBoard.Forms
         }
 
         /// <summary>
-        /// Handles setting the menu open variable to false when esc is pressed.
-        /// </summary>
-        private void MainForm_KeyUp(object sender, KeyEventArgs e)
-        {
-            // Esc closes the menu too.
-            if (e.KeyCode == Keys.Escape)
-                this.menuOpen = false;
-        }
-
-        /// <summary>
         /// Handles setting the menu open variable to false when the form loses focus.
         /// </summary>
         private void MainForm_Deactivate(object sender, EventArgs e)
