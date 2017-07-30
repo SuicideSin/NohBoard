@@ -346,6 +346,7 @@ namespace ThoNohT.NohBoard.Forms
         {
             this.menuOpen = true;
 
+
             this.mnuSaveDefinition.Enabled = GlobalSettings.CurrentDefinition != null;
             if (GlobalSettings.CurrentDefinition != null)
             {
@@ -355,6 +356,7 @@ namespace ThoNohT.NohBoard.Forms
                 var mousePos = this.PointToClient(Cursor.Position);
                 this.elementUnderCursor =
                     GlobalSettings.CurrentDefinition.Elements.FirstOrDefault(x => x.Inside(mousePos));
+                this.highlightedDefinition = this.elementUnderCursor;
 
                 var relevantElement = this.selectedDefinition ?? this.elementUnderCursor;
                 this.mnuEditElementStyle.Enabled = relevantElement != null;
